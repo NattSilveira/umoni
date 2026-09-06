@@ -21,9 +21,19 @@ const displayDescription = (description) =>
 const saveExpenses = (expenses) =>
   localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
 const currentDate = new Date();
+const DASHBOARD_MONTH_KEY = "umoni-dashboard-month";
 const monthKey = (date) =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-let dashboardMonth = monthKey(currentDate);
+const dashboardMonthPattern = /^\d{4}-(0[1-9]|1[0-2])$/;
+const urlDashboardMonth = new URLSearchParams(window.location.search).get("period");
+const savedDashboardMonth = dashboardMonthPattern.test(urlDashboardMonth || "")
+  ? urlDashboardMonth
+  : localStorage.getItem(DASHBOARD_MONTH_KEY);
+let dashboardMonth = dashboardMonthPattern.test(savedDashboardMonth || "")
+  ? savedDashboardMonth
+  : monthKey(currentDate);
+if (dashboardMonthPattern.test(urlDashboardMonth || ""))
+  localStorage.setItem(DASHBOARD_MONTH_KEY, dashboardMonth);
 const monthNames = Array.from({ length: 12 }, (_, index) =>
   new Date(2020, index, 1).toLocaleDateString("pt-BR", { month: "long" }),
 );
@@ -211,10 +221,12 @@ for (let year = currentDate.getFullYear() - 5; year <= currentDate.getFullYear()
 monthNames.forEach((name, index) => dashboardMonthSelect.add(new Option(name, String(index))));
 const updateDashboardMonth = () => {
   dashboardMonth = `${dashboardYearSelect.value}-${String(Number(dashboardMonthSelect.value) + 1).padStart(2, "0")}`;
+  localStorage.setItem(DASHBOARD_MONTH_KEY, dashboardMonth);
   refresh();
 };
-dashboardYearSelect.value = String(currentDate.getFullYear());
-dashboardMonthSelect.value = String(currentDate.getMonth());
+const initialDashboardDate = new Date(`${dashboardMonth}-01T12:00:00`);
+dashboardYearSelect.value = String(initialDashboardDate.getFullYear());
+dashboardMonthSelect.value = String(initialDashboardDate.getMonth());
 $("#today-label").textContent = currentDate.toLocaleDateString("pt-BR", { day: "2-digit", month: "long" }).toUpperCase();
 dashboardYearSelect.onchange = updateDashboardMonth;
 dashboardMonthSelect.onchange = updateDashboardMonth;

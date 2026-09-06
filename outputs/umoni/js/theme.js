@@ -18,9 +18,13 @@ const isSouthernHemisphere = southernTimezones.some((zone) =>
 const applyTheme = (theme) => {
   const dashboardMonth = document.querySelector("#dashboard-month")?.value;
   const dashboardYear = document.querySelector("#dashboard-year")?.value;
+  const moduleMonth = document.querySelector("#module-calendar-month")?.value;
+  const moduleYear = document.querySelector("#module-calendar-year")?.value;
   const selectedDate =
     dashboardYear && dashboardMonth !== undefined
       ? `${dashboardYear}-${String(Number(dashboardMonth) + 1).padStart(2, "0")}-01`
+      : moduleYear && moduleMonth !== undefined
+        ? `${moduleYear}-${String(Number(moduleMonth) + 1).padStart(2, "0")}-01`
       : document.querySelector("#calendar-date")?.value ||
     document.querySelector("#module-calendar-day")?.value;
   const month = selectedDate
@@ -71,3 +75,26 @@ document
 document
   .querySelector("#dashboard-year")
   ?.addEventListener("change", updateSeasonalDashboardTheme);
+document.addEventListener("change", (event) => {
+  if (
+    ["module-calendar-day", "module-calendar-month", "module-calendar-year"].includes(
+      event.target.id,
+    ) && (themeSelect?.value || savedTheme) === "seasonal"
+  ) {
+    applyTheme("seasonal");
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (!link || link.target === "_blank" || link.origin !== location.origin) return;
+  const destination = new URL(link.href);
+  const savedPeriod = localStorage.getItem("umoni-dashboard-month");
+  if (savedPeriod && /^\d{4}-(0[1-9]|1[0-2])$/.test(savedPeriod) && destination.pathname.endsWith("/index.html")) {
+    destination.searchParams.set("period", savedPeriod);
+  }
+  if (destination.pathname === location.pathname && destination.search === location.search) return;
+  event.preventDefault();
+  document.body.classList.add("page-leaving");
+  window.setTimeout(() => { window.location.href = destination.href; }, 180);
+});

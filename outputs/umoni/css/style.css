@@ -8,6 +8,7 @@
   --muted: #77777f;
   --line: #e7e6e1;
 }
+
 body[data-theme="night"] {
   --paper: #15161b;
   --white: #202127;
@@ -42,16 +43,28 @@ body[data-theme="seasonal"] main {
   background: transparent;
 }
 body[data-theme="seasonal"][data-season="summer"] {
-  background: radial-gradient(circle at 92% 8%, #ffc94d 0 10%, transparent 25%), linear-gradient(135deg, #fff4bf 0%, #ffd6a5 100%);
+  background-image: linear-gradient(90deg, #fff5d9e8 0%, #fff5d9b8 42%, #f3a65a66 100%), url("../assets/summer-light.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 body[data-theme="seasonal"][data-season="autumn"] {
-  background: radial-gradient(circle at 90% 10%, #dc8049 0 9%, transparent 24%), linear-gradient(135deg, #ffe1bd 0%, #eeb9a0 100%);
+  background-image: linear-gradient(90deg, #fff1d9e8 0%, #fff1d9bd 42%, #b85b2a66 100%), url("../assets/autumn-forest.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 body[data-theme="seasonal"][data-season="winter"] {
-  background: radial-gradient(circle at 90% 10%, #a9d9f2 0 9%, transparent 24%), linear-gradient(135deg, #d9efff 0%, #b9dce8 100%);
+  background-image: linear-gradient(90deg, #edf7ffe8 0%, #edf7ffb8 42%, #b9d9ed66 100%), url("../assets/winter-blue.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 body[data-theme="seasonal"][data-season="spring"] {
-  background: radial-gradient(circle at 90% 10%, #f4a6c7 0 8%, transparent 23%), linear-gradient(135deg, #fffbd0 0%, #cdeecf 100%);
+  background-image: linear-gradient(90deg, #fffdebe8 0%, #fffdebbd 42%, #cdeecf66 100%), url("../assets/spring-garden.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 body[data-theme="seasonal"]::before {
   position: fixed;
@@ -72,10 +85,15 @@ body[data-theme="seasonal"][data-season="autumn"]::before { content: "❧"; }
 body[data-theme="seasonal"][data-season="winter"] { --season-accent: #4d88a5; }
 body[data-theme="seasonal"][data-season="winter"]::before { content: "❄"; }
 body[data-theme="seasonal"][data-season="spring"] { --season-accent: #b34d7c; }
-body[data-theme="seasonal"][data-season="spring"]::before { content: "❀"; }
+body[data-theme="seasonal"][data-season="spring"]::before {
+  content: none !important;
+  display: none !important;
+}
 body[data-theme="seasonal"] aside {
   z-index: 1;
-  background: color-mix(in srgb, #111114 92%, var(--season-accent));
+  background: rgba(17, 17, 20, 0.72);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
   border-right: 1px solid color-mix(in srgb, var(--season-accent) 45%, transparent);
 }
 body[data-theme="seasonal"] main { position: relative; z-index: 1; }
@@ -1484,4 +1502,82 @@ select {
   .transactions table { min-width: 650px; }
   .calendar-page { padding: 14px; overflow-x: auto; }
   .calendar-page .calendar-grid, .calendar-page .calendar-weekdays { min-width: 620px; }
+}
+
+@media (max-width: 700px) {
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  body[data-theme="seasonal"] { background-attachment: scroll; }
+  main { min-width: 0; width: 100%; max-width: 100%; overflow: hidden; }
+  main > header { width: 100%; }
+  main > header > div:last-child,
+  .dashboard-period { width: 100%; max-width: 100%; flex-wrap: wrap; }
+  .dashboard-period > label { flex: 0 0 auto; }
+  .dashboard-period select { flex: 1 1 130px; min-width: 0; }
+  main > header button,
+  main > header .button { min-width: 0; }
+  .metrics article,
+  .quick-card,
+  .panel { min-width: 0; max-width: 100%; }
+}
+
+/* Keep seasonal surfaces translucent after the base component rules. */
+body[data-theme="seasonal"] .panel,
+body[data-theme="seasonal"] .metrics article,
+body[data-theme="seasonal"] .quick-card,
+body[data-theme="seasonal"] .category-summary-card,
+body[data-theme="seasonal"] .calendar-page,
+body[data-theme="seasonal"] .success-card,
+body[data-theme="seasonal"] .detail-card {
+  background: rgba(255, 255, 255, 0.34);
+  border-color: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 45px rgba(50, 38, 31, 0.12);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+}
+body[data-theme="seasonal"] .calendar-day {
+  background: rgba(255, 255, 255, 0.42);
+  border-color: rgba(255, 255, 255, 0.68);
+}
+body[data-theme="seasonal"] .chart,
+body[data-theme="seasonal"] .transactions { background: transparent; }
+body[data-theme="seasonal"]::before { opacity: 0.05; }
+body[data-theme="seasonal"] aside {
+  background: rgba(22, 16, 24, 0.82);
+  border-right: 1px solid rgba(244, 212, 77, 0.24);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+}
+body[data-theme="seasonal"] aside nav a,
+body[data-theme="seasonal"] aside .settings-link {
+  color: rgba(255, 255, 255, 0.78);
+}
+body[data-theme="seasonal"] aside nav a:hover,
+body[data-theme="seasonal"] aside .settings-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+body[data-theme="seasonal"] aside nav a.active {
+  color: #fff;
+  background: rgba(118, 85, 232, 0.25);
+  border-left-color: var(--yellow);
+}
+
+/* Lightweight page transition for the static multi-page app. */
+body {
+  animation: page-enter 260ms ease both;
+}
+body.page-leaving {
+  animation: page-leave 180ms ease both;
+  pointer-events: none;
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes page-leave {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body, body.page-leaving { animation: none; }
 }
