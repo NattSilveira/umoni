@@ -1,4 +1,6 @@
 const themeSelect = document.querySelector("#theme-select");
+const REGION_KEY = "umoni-region";
+const regionSelect = document.querySelector("#region-select");
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
 const savedTheme = localStorage.getItem("umoni-theme") || "light";
 const seasonThemes = ["spring", "summer", "autumn", "winter"];
@@ -49,8 +51,6 @@ const applyTheme = (theme) => {
 };
 applyTheme(savedTheme);
 const menuToggle = document.querySelector("#menu-toggle");
-const REGION_KEY = "umoni-region";
-const regionSelect = document.querySelector("#region-select");
 const closeMobileMenu = () => {
   document.body.classList.remove("menu-open");
   menuToggle?.setAttribute("aria-expanded", "false");
