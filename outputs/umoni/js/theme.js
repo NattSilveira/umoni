@@ -20,13 +20,17 @@ const applyTheme = (theme) => {
   const dashboardYear = document.querySelector("#dashboard-year")?.value;
   const moduleMonth = document.querySelector("#module-calendar-month")?.value;
   const moduleYear = document.querySelector("#module-calendar-year")?.value;
+  const savedPeriod = localStorage.getItem("umoni-dashboard-month");
   const selectedDate =
     dashboardYear && dashboardMonth !== undefined
       ? `${dashboardYear}-${String(Number(dashboardMonth) + 1).padStart(2, "0")}-01`
       : moduleYear && moduleMonth !== undefined
         ? `${moduleYear}-${String(Number(moduleMonth) + 1).padStart(2, "0")}-01`
       : document.querySelector("#calendar-date")?.value ||
-    document.querySelector("#module-calendar-day")?.value;
+    document.querySelector("#module-calendar-day")?.value ||
+    (savedPeriod && /^\d{4}-(0[1-9]|1[0-2])$/.test(savedPeriod)
+      ? `${savedPeriod}-01`
+      : null);
   const month = selectedDate
     ? Number(selectedDate.slice(5, 7))
     : new Date().getMonth() + 1;
