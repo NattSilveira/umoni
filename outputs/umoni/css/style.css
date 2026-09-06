@@ -1515,6 +1515,15 @@ select {
   body[data-theme="seasonal"] { background-attachment: scroll; }
   main { min-width: 0; width: 100%; max-width: 100%; margin: 0 !important; overflow: hidden; }
   main > header { width: 100%; }
+  main > header,
+  .analysis-heading,
+  .calendar-head { padding-top: 28px; }
+  main > header h1,
+  .analysis-heading h1,
+  .calendar-head h1 { margin-top: 8px; }
+  main > header > div:first-child,
+  .analysis-heading > div:first-child,
+  .calendar-head > div:first-child { min-width: 0; }
   main > header > div:last-child,
   .dashboard-period { width: 100%; max-width: 100%; flex-wrap: wrap; }
   .dashboard-period > label { flex: 0 0 auto; }
@@ -1524,6 +1533,8 @@ select {
   .metrics article,
   .quick-card,
   .panel { min-width: 0; max-width: 100%; }
+  .module-card { margin-top: 8px; }
+  .module-section-heading { gap: 12px; }
 }
 
 /* Keep seasonal surfaces translucent after the base component rules. */
@@ -1568,12 +1579,54 @@ body[data-theme="seasonal"] aside nav a.active {
   border-left-color: var(--yellow);
 }
 @media (max-width: 700px) {
+  body[data-theme="seasonal"] > aside {
+    inset: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    height: calc(100dvh - 24px) !important;
+    min-height: 0 !important;
+    padding: 76px 18px 22px !important;
+    border: 1px solid rgba(255, 255, 255, 0.52) !important;
+    border-radius: 28px !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 24px 70px rgba(54, 35, 43, 0.22) !important;
+    backdrop-filter: blur(24px) saturate(135%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(135%) !important;
+  }
+  body[data-theme="seasonal"] > aside nav { gap: 8px; }
+  body[data-theme="seasonal"] > aside nav a {
+    justify-content: flex-start;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    color: #3e3040;
+  }
+  body[data-theme="seasonal"] > aside nav a.active {
+    background: rgba(118, 85, 232, 0.22);
+    border-color: rgba(118, 85, 232, 0.25);
+    color: #39235f;
+  }
+  body[data-theme="seasonal"] > aside .settings-link {
+    border-radius: 16px;
+    color: #3e3040;
+  }
+}
+@media (max-width: 700px) {
   body > .mobile-menu-toggle {
     display: grid !important;
     position: fixed !important;
     left: 14px !important;
     top: 14px !important;
     z-index: 200 !important;
+  }
+  .mobile-menu-toggle svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   body > aside {
     position: fixed !important;

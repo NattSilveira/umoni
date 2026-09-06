@@ -54,9 +54,12 @@ const closeMobileMenu = () => {
 menuToggle?.setAttribute("aria-expanded", "false");
 const updateMenuButton = (open) => {
   if (!menuToggle) return;
-  menuToggle.textContent = open ? "×" : "U";
+  menuToggle.innerHTML = open
+    ? "×"
+    : '<svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"></circle><path d="M14 15v9a8 8 0 0 0 16 0v-9M12 30l6-5 5 3 9-10"></path></svg>';
   menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
 };
+updateMenuButton(false);
 menuToggle?.addEventListener("click", () => {
   const open = !document.body.classList.contains("menu-open");
   document.body.classList.toggle("menu-open", open);
