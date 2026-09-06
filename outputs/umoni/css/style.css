@@ -1475,7 +1475,7 @@ select {
     position: fixed;
     inset: 0 auto 0 0;
     z-index: 40;
-    width: 260px;
+    width: min(260px, 84vw);
     height: 100vh;
     min-height: 100vh;
     padding: 72px 18px 18px;
@@ -1510,8 +1510,10 @@ select {
 
 @media (max-width: 700px) {
   html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  body { display: block !important; position: relative; }
+  body.menu-open { overflow: hidden; }
   body[data-theme="seasonal"] { background-attachment: scroll; }
-  main { min-width: 0; width: 100%; max-width: 100%; overflow: hidden; }
+  main { min-width: 0; width: 100%; max-width: 100%; margin: 0 !important; overflow: hidden; }
   main > header { width: 100%; }
   main > header > div:last-child,
   .dashboard-period { width: 100%; max-width: 100%; flex-wrap: wrap; }
@@ -1564,6 +1566,40 @@ body[data-theme="seasonal"] aside nav a.active {
   color: #fff;
   background: rgba(118, 85, 232, 0.25);
   border-left-color: var(--yellow);
+}
+@media (max-width: 700px) {
+  body > .mobile-menu-toggle {
+    display: grid !important;
+    position: fixed !important;
+    left: 14px !important;
+    top: 14px !important;
+    z-index: 200 !important;
+  }
+  body > aside {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    overflow-y: auto !important;
+    transform: translateX(-105%) !important;
+    z-index: 190 !important;
+    background: #17131a !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  body.menu-open > aside { transform: translateX(0) !important; }
+  body.menu-open > main { position: relative; z-index: 0 !important; }
+  body.menu-open::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 180 !important;
+    background: rgba(17, 17, 20, 0.48);
+  }
+  body.menu-open > aside { z-index: 190 !important; }
+  body.menu-open > .mobile-menu-toggle { z-index: 200 !important; }
 }
 .budget-form {
   max-width: 420px;

@@ -46,10 +46,23 @@ const applyTheme = (theme) => {
 };
 applyTheme(savedTheme);
 const menuToggle = document.querySelector("#menu-toggle");
-const closeMobileMenu = () => document.body.classList.remove("menu-open");
-menuToggle?.addEventListener("click", () =>
-  document.body.classList.toggle("menu-open"),
-);
+const closeMobileMenu = () => {
+  document.body.classList.remove("menu-open");
+  menuToggle?.setAttribute("aria-expanded", "false");
+  updateMenuButton(false);
+};
+menuToggle?.setAttribute("aria-expanded", "false");
+const updateMenuButton = (open) => {
+  if (!menuToggle) return;
+  menuToggle.textContent = open ? "×" : "U";
+  menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+};
+menuToggle?.addEventListener("click", () => {
+  const open = !document.body.classList.contains("menu-open");
+  document.body.classList.toggle("menu-open", open);
+  menuToggle.setAttribute("aria-expanded", String(open));
+  updateMenuButton(open);
+});
 document.addEventListener("click", (event) => {
   if (
     document.body.classList.contains("menu-open") &&
@@ -58,6 +71,9 @@ document.addEventListener("click", (event) => {
   )
     closeMobileMenu();
 });
+document.querySelectorAll("aside nav a, aside .settings-link").forEach((link) =>
+  link.addEventListener("click", closeMobileMenu),
+);
 themeSelect?.addEventListener("change", () => {
   localStorage.setItem("umoni-theme", themeSelect.value);
   applyTheme(themeSelect.value);
