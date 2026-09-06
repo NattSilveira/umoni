@@ -1577,9 +1577,9 @@ body[data-theme="seasonal"] aside nav a.active {
   }
   body > aside {
     position: fixed !important;
-    inset: 0 auto 0 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
+    inset: 0 !important;
+    width: auto !important;
+    max-width: none !important;
     height: 100dvh !important;
     min-height: 100dvh !important;
     overflow-y: auto !important;
