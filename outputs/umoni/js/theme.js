@@ -34,7 +34,10 @@ const applyTheme = (theme) => {
   const month = selectedDate
     ? Number(selectedDate.slice(5, 7))
     : new Date().getMonth() + 1;
-  const calendarSeason = isSouthernHemisphere
+  const region = localStorage.getItem(REGION_KEY) || "south-america";
+  const southernHemisphere = region === "south-america" ||
+    (region !== "north-america" && isSouthernHemisphere);
+  const calendarSeason = southernHemisphere
     ? month <= 2 || month === 12 ? "summer" : month <= 5 ? "autumn" : month <= 8 ? "winter" : "spring"
     : month <= 2 || month === 12 ? "winter" : month <= 5 ? "spring" : month <= 8 ? "summer" : "autumn";
   document.body.dataset.theme = seasonThemes.includes(theme)
@@ -46,6 +49,8 @@ const applyTheme = (theme) => {
 };
 applyTheme(savedTheme);
 const menuToggle = document.querySelector("#menu-toggle");
+const REGION_KEY = "umoni-region";
+const regionSelect = document.querySelector("#region-select");
 const closeMobileMenu = () => {
   document.body.classList.remove("menu-open");
   menuToggle?.setAttribute("aria-expanded", "false");
@@ -60,7 +65,7 @@ const updateMenuButton = (open) => {
   menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
 };
 updateMenuButton(false);
-menuToggle?.addEventListener("click", () => {
+menuToggle && (menuToggle.onclick = () => {
   const open = !document.body.classList.contains("menu-open");
   document.body.classList.toggle("menu-open", open);
   menuToggle.setAttribute("aria-expanded", String(open));
@@ -99,6 +104,10 @@ document
   .querySelector("#dashboard-year")
   ?.addEventListener("change", updateSeasonalDashboardTheme);
 document.addEventListener("change", (event) => {
+  if (event.target.id === "region-select") {
+    localStorage.setItem(REGION_KEY, event.target.value);
+    applyTheme(themeSelect?.value || savedTheme);
+  }
   if (
     ["module-calendar-day", "module-calendar-month", "module-calendar-year"].includes(
       event.target.id,
@@ -107,6 +116,10 @@ document.addEventListener("change", (event) => {
     applyTheme("seasonal");
   }
 });
+if (regionSelect) {
+  regionSelect.value = localStorage.getItem(REGION_KEY) || "south-america";
+  regionSelect.addEventListener("change", () => applyTheme(themeSelect?.value || savedTheme));
+}
 
 document.addEventListener("click", (event) => {
   const link = event.target.closest("a[href]");
