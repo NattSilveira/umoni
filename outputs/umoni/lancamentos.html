@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Umoni — Lançamentos</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+<body data-page="lancamentos">
+    <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Abrir menu">U</button>
+    <aside>
+      <div class="brand"><b class="brand-coin" aria-label="Logo Umoni"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/><path d="M14 15v9a8 8 0 0 0 16 0v-9M12 30l6-5 5 3 9-10"/></svg></b><strong>umoni</strong></div>
+      <nav>
+        <a href="index.html" data-page="dashboard"
+          >🏠 <span>Visão geral</span></a
+        ><a href="lancamentos.html" data-page="lancamentos"
+          >🧾 <span>Lançamentos</span></a
+        ><a href="categorias.html" data-page="categorias"
+          >🗂️ <span>Categorias</span></a
+        ><a href="orcamento.html" data-page="orcamento"
+          >🎯 <span>Orçamento</span></a
+        ><a href="calendario.html" data-page="calendario"
+          >📅 <span>Calendário</span></a
+        ><a href="analises.html" data-page="analises"
+          >📊 <span>Análises</span></a
+        >
+      </nav>
+      <div class="settings-area">
+        <a class="settings-link" href="configuracoes.html"
+          >⚙️ <span>Configurações</span></a
+        >
+        <div class="theme-switcher">
+          <label for="theme-select">Aparência</label
+          ><select id="theme-select">
+            <option value="light">Claro</option>
+            <option value="seasonal">Estação do ano</option>
+            <option value="night">Noturno</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <small class="eyebrow" id="eyebrow"></small>
+          <h1></h1>
+          <p id="description"></p>
+        </div>
+        <a class="button" href="index.html">← Voltar à visão geral</a>
+      </header>
+      <section id="content"></section>
+    </main>
+    <script src="js/theme.js"></script>
+    <script src="js/module.js"></script>
+  </body>
+</html>

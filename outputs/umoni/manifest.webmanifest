@@ -1,0 +1,10 @@
+{
+  "name": "Umoni — Controle financeiro",
+  "short_name": "Umoni",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f7f4",
+  "theme_color": "#111114",
+  "lang": "pt-BR",
+  "description": "Controle financeiro pessoal simples e visual."
+}

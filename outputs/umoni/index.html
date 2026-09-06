@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Umoni — Controle financeiro</title>
+    <meta name="theme-color" content="#111114" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+<body>
+    <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Abrir menu">U</button>
+    <aside>
+      <div class="brand"><b class="brand-coin" aria-label="Logo Umoni"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/><path d="M14 15v9a8 8 0 0 0 16 0v-9M12 30l6-5 5 3 9-10"/></svg></b><strong>umoni</strong></div>
+      <nav>
+        <a class="active" id="dashboard-link">🏠 <span>Visão geral</span></a
+        ><a id="transactions-link" href="lancamentos.html"
+          >🧾 <span>Lançamentos</span></a
+        ><a id="categories-link" href="categorias.html"
+          >🗂️ <span>Categorias</span></a
+        ><a id="budget-link" href="orcamento.html">🎯 <span>Orçamento</span></a
+        ><a id="calendar-link" href="calendario.html"
+          >📅 <span>Calendário</span></a
+        ><a id="analysis-link" href="analises.html">📊 <span>Análises</span></a>
+      </nav>
+      <div class="settings-area">
+        <a class="settings-link" href="configuracoes.html"
+          >⚙️ <span>Configurações</span></a
+        >
+        <div class="theme-switcher">
+          <label for="theme-select">Aparência</label
+          ><select id="theme-select">
+            <option value="light">Claro</option>
+            <option value="seasonal">Estação do ano</option>
+            <option value="night">Noturno</option>
+          </select>
+        </div>
+      </div>
+      <div class="privacy">
+        <small>Seu espaço</small><br /><b>Privacidade em primeiro lugar.</b
+        ><br /><small>Sem banco conectado.</small>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <small class="eyebrow" id="today-label"></small>
+          <h1>Olá, Natalia.</h1>
+          <p>Veja a história do seu dinheiro com mais clareza.</p>
+        </div>
+        <div>
+          <div class="dashboard-period" aria-label="Selecionar período do resumo"><span>Resumo de</span><select id="dashboard-year" aria-label="Selecionar ano"></select><select id="dashboard-month" aria-label="Selecionar mês"></select></div>
+          <button id="open">+ Novo gasto</button>
+        </div>
+      </header>
+      <section class="analysis-view" id="analysis-view" hidden>
+        <div class="analysis-heading">
+          <div>
+            <small class="eyebrow">ANÁLISE MENSAL</small>
+            <h2>Para onde foi seu dinheiro?</h2>
+            <p>Uma visão geral dos seus gastos organizados por categoria.</p>
+          </div>
+          <div class="analysis-controls">
+            <label for="analysis-period">Período</label>
+            <select id="analysis-period">
+              <option value="week">Esta semana</option>
+              <option value="month" selected>Este mês</option>
+              <option value="bimester">Últimos 2 meses</option>
+              <option value="quarter">Últimos 3 meses</option>
+              <option value="semester">Últimos 6 meses</option>
+              <option value="year">Este ano</option>
+            </select>
+            <button class="outline" id="back-dashboard">
+              ← Voltar ao resumo
+            </button>
+          </div>
+        </div>
+        <div class="analysis-cards">
+          <article class="panel">
+            <small>Total gasto no mês</small>
+            <h2 id="analysis-total">R$ 0,00</h2>
+          </article>
+          <article class="panel">
+            <small>Categoria principal</small>
+            <h2 id="analysis-top">Nenhuma</h2>
+          </article>
+          <article class="panel">
+            <small>Quantidade de categorias</small>
+            <h2 id="analysis-count">0</h2>
+          </article>
+          <article class="panel">
+            <small>Receitas no período</small>
+            <h2 id="analysis-income">R$ 0,00</h2>
+          </article>
+        </div>
+        <article class="panel analysis-breakdown">
+          <h3>Gastos por categoria</h3>
+          <div id="analysis-list" class="analysis-list">
+            <p class="empty-row">
+              Adicione gastos para gerar sua análise mensal.
+            </p>
+          </div>
+        </article>
+      </section>
+      <section class="quick-actions" id="quick-actions">
+        <button class="quick-card expense" id="open-expense">
+          <span>−</span>
+          <div>
+            <strong>Adicionar gasto</strong><small>Registre uma despesa</small>
+          </div>
+          <b>→</b>
+        </button>
+        <button class="quick-card income" id="open-income">
+          <span>+</span>
+          <div>
+            <strong>Adicionar receita</strong
+            ><small>Salário, freela ou entrada</small>
+          </div>
+          <b>→</b>
+        </button>
+        <button class="quick-card category-card">
+          <span>◌</span>
+          <div>
+            <strong>Nova categoria</strong><small>Organize do seu jeito</small>
+          </div>
+          <b>→</b>
+        </button>
+      </section>
+      <section class="metrics" id="summary-cards">
+        <article id="total-card">
+          <small>Total gasto</small>
+          <h2 id="total-spent">R$ 0,00</h2>
+          <em>Comece adicionando um gasto</em>
+        </article>
+        <article id="budget-card">
+          <small>Orçamento restante</small>
+          <h2 id="budget-left">R$ 0,00</h2>
+          <em>Defina seu orçamento mensal</em>
+        </article>
+        <article id="top-category-card">
+          <small>Maior categoria</small>
+          <h2 id="top-category">Nenhuma</h2>
+          <em id="top-category-value">Suas categorias aparecerão aqui</em>
+        </article>
+        <article id="transactions-card">
+          <small>Lançamentos</small>
+          <h2 id="transaction-count">0</h2>
+          <em>lançamentos registrados</em>
+        </article>
+      </section>
+      <section class="columns" id="dashboard-insights">
+        <article class="panel">
+          <h3>Ritmo de gastos</h3>
+          <div class="chart" id="spending-chart">
+            <p class="chart-empty">
+              Adicione gastos para visualizar o gráfico.
+            </p>
+          </div>
+          <div
+            class="chart-tooltip"
+            id="chart-tooltip"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <div class="chart-legend" id="chart-legend"></div>
+          <div class="chart-axis">
+            <small id="chart-start">—</small><small>Valor (R$)</small
+            ><small id="chart-end">—</small>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Onde seu dinheiro foi</h3>
+          <div id="category-insights">
+            <div class="category empty-category">
+              <b>🍽</b>
+              <div>
+                <strong>Nenhuma categoria ainda</strong
+                ><small>Adicione seu primeiro gasto para começar</small
+                ><progress value="78" max="100"></progress>
+              </div>
+              <strong>—</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+      <section class="calendar-module panel" id="calendar-module">
+        <div class="calendar-head">
+          <div>
+            <small class="eyebrow">CONSULTA POR DATA</small>
+            <h2>Calendário</h2>
+            <p>Analise seus gastos por dia, mês ou ano.</p>
+          </div>
+          <div class="calendar-filters">
+            <select id="calendar-view">
+              <option value="day">Dia</option>
+              <option value="month" selected>Mês</option>
+              <option value="year">Ano</option></select
+            ><input type="date" id="calendar-date" /><select
+              id="calendar-month"
+              hidden
+            >
+              <option value="01">Janeiro</option>
+              <option value="02">Fevereiro</option>
+              <option value="03">Março</option>
+              <option value="04">Abril</option>
+              <option value="05">Maio</option>
+              <option value="06">Junho</option>
+              <option value="07">Julho</option>
+              <option value="08">Agosto</option>
+              <option value="09">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option></select
+            ><select id="calendar-year" hidden></select>
+          </div>
+        </div>
+        <div id="calendar-result" class="calendar-result"></div>
+      </section>
+      <article class="panel transactions" id="transactions-section">
+        <h3>
+          Últimos lançamentos
+          <a id="view-all-transactions" href="#transactions-section"
+            >Ver todos →</a
+          >
+        </h3>
+        <table id="transactions-table">
+          <tr>
+            <th>DESCRIÇÃO</th>
+            <th>CATEGORIA</th>
+            <th>DATA</th>
+            <th>VALOR</th>
+            <th>AÇÕES</th>
+          </tr>
+          <tr>
+            <td colspan="5" class="empty-row">
+              Nenhum lançamento ainda. Use “Adicionar gasto” para começar.
+            </td>
+          </tr>
+        </table>
+      </article>
+    </main>
+    <div class="modal" id="modal">
+      <form id="form">
+        <h2>Novo gasto</h2>
+        <input type="hidden" id="movement-type" value="expense" />
+        <label
+          >Descrição<input
+            id="description"
+            required
+            placeholder="Ex.: Café da manhã" /></label
+        ><label
+          >Valor<input
+            id="amount"
+            required
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="0,00" /></label
+        ><label
+          >Moeda da movimentação<select id="currency" required>
+            <option value="BRL">Real brasileiro (BRL)</option>
+            <option value="USD">Dólar americano (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+          </select></label
+        ><label
+          >Data do gasto<input id="expense-date" type="date" required /></label
+        ><label
+          >Categoria<select id="category-select">
+            <option>Refeições</option>
+            <option>Mercado</option>
+            <option>Estudos</option>
+            <option>Transporte</option>
+            <option>Passeios</option>
+            <option value="add-category">Adicionar</option>
+          </select></label
+        >
+        <label
+          >Meio de movimentação<select id="payment-method" required>
+            <option value="">Selecione uma opção</option>
+            <option>Crédito</option>
+            <option>Débito</option>
+            <option>Pix</option>
+            <option>Empréstimo</option>
+            <option>Criptomoedas</option>
+          </select></label
+        >
+        <div>
+          <button type="button" class="outline" id="close">Cancelar</button
+          ><button>Salvar gasto</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal category-modal" id="category-modal">
+      <form id="category-form">
+        <div class="modal-icon">◌</div>
+        <h2>Nova categoria</h2>
+        <p>Crie uma categoria para organizar seus gastos do seu jeito.</p>
+        <label
+          >Nome da categoria<input
+            id="new-category-name"
+            required
+            maxlength="30"
+            placeholder="Ex.: Saúde, Viagens..."
+        /></label>
+        <div class="modal-actions">
+          <button type="button" class="outline" id="close-category">
+            Cancelar</button
+          ><button>Adicionar categoria</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal" id="detail-modal">
+      <div class="detail-card">
+        <button class="detail-close" id="close-detail">×</button
+        ><small class="eyebrow">DETALHES DA MOVIMENTAÇÃO</small>
+        <h2 id="detail-title">Gastos</h2>
+        <div class="detail-summary">
+          <div class="detail-total">
+            <small>Total da categoria</small
+            ><strong id="detail-total-value">R$ 0,00</strong>
+          </div>
+          <div class="detail-total saving">
+            <strong id="detail-saving-value"
+              >Você economizou: aguardando comparação</strong
+            >
+          </div>
+        </div>
+        <div id="detail-list" class="detail-list"></div>
+      </div>
+    </div>
+    <div class="modal success-modal" id="success-modal">
+      <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h2>Movimentação salva</h2>
+        <p id="success-message">Seu lançamento foi registrado com sucesso.</p>
+        <button id="close-success">Continuar</button>
+      </div>
+    </div>
+    <script src="js/theme.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
